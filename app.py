@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 from flask import Flask, render_template
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ def register():
 @app.route("/forum", methods=["GET", "POST"])
 def forum():
     return render_template("forum.html")
-=======
+
 from flask import Flask, render_template, request, session, redirect
 import sqlite3
 app = Flask(__name__)
@@ -109,7 +109,7 @@ def new_post():
     return render_template("new_post.html")
 
 
->>>>>>> a24bcdf8261d4808174845a781b00413eaaf78c8
+
 
 if __name__ == "__main__":
     app.run(debug=True)
