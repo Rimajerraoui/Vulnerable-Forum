@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrieren - VulnForum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <h2>VulnForum</h2>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/register">Registrieren</a>
+    </nav>
+
+    <main class="card">
+        <h1>Registrieren</h1>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Benutzername" required>
+            <input type="password" name="password" placeholder="Passwort" required>
+            <button type="submit">Account erstellen</button>
+        </form>
+    </main>
+</body>
+</html>
