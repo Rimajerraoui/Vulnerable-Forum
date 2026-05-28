@@ -1,74 +1,38 @@
-
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <title>Login - VulnForum</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
-    <nav>
-        <h2>VulnForum</h2>
+<nav>
+    <h2>VulnForum</h2>
+    <a href="/">Home</a>
+    <a href="/forum">Forum</a>
+    <a href="/search">Suche</a>
+    <a href="/login">Login</a>
+    <a href="/register">Registrieren</a>
+</nav>
 
-        <a href="/">Home</a>
-        <a href="/forum">Forum</a>
-        <a href="/search">Suche</a>
-        <a href="/login">Login</a>
-        <a href="/register">Registrieren</a>
-    </nav>
-
-    <main class="container">
-
-        <section class="card">
-
-            <h1>Login</h1>
-
-            <p>
-                Melde dich im VulnForum an.
-            </p>
-
-            <form method="POST">
-
-                <input type="text"
-                       name="username"
-                       placeholder="Benutzername"
-                       required>
-
-                <input type="password"
-                       name="password"
-                       placeholder="Passwort"
-                       required>
-
-                <button type="submit">
-                    Einloggen
-                </button>
-
-            </form>
-
-            <p style="margin-top: 15px;">
-                Noch kein Konto?
-                <a href="/register">Jetzt registrieren</a>
-            </p>
-
-        </section>
-
-    <main class="card">
+<main class="container">
+    <section class="card">
         <h1>Login</h1>
-        {% if error %}
-        <p style="color: red;">{{ error }}</p>
-        {% endif %}
+        <p>Melde dich im VulnForum an.</p>
+
         <form method="POST">
             <input type="text" name="username" placeholder="Benutzername" required>
             <input type="password" name="password" placeholder="Passwort" required>
             <button type="submit">Einloggen</button>
         </form>
-    </main>
+
+        <p style="margin-top: 15px;">
+            Noch kein Konto?
+            <a href="/register">Jetzt registrieren</a>
+        </p>
+    </section>
+</main>
 
 </body>
 </html>
-
