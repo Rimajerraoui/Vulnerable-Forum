@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "1234"  # ⚠️ BEWUSSTE LÜCKE: schwacher Secret Key
+app.secret_key = "1234"  # ⚠️ BEWUSSTE LÜCKE: schwacher Secret Key , Angreifer kann es leicht faelschen
 
 def init_db():
     conn = sqlite3.connect("database.db")
@@ -33,11 +33,11 @@ init_db()
 def home():
     return render_template("index.html")
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])# broken authentication
 def register():
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]  # ⚠️ BEWUSSTE LÜCKE: Klartext Passwort
+        password = request.form["password"]  # ⚠️ BEWUSSTE LÜCKE: Passwoerter sind in DB lesbar (broken audentication)
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
         c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
@@ -46,14 +46,14 @@ def register():
         return redirect("/login")
     return render_template("register.html")
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"]) #SQL Injecton
 def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
-        # ⚠️ BEWUSSTE LÜCKE: SQL Injection
+        # ⚠️ BEWUSSTE LÜCKE: SQL Injection , login ohne passwort moeglich , wenn der Angreifer 
         query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
         user = c.execute(query).fetchone()
         conn.close()
@@ -64,7 +64,7 @@ def login():
         return render_template("login.html", error="Falscher Benutzername oder Passwort!")
     return render_template("login.html")
 
-@app.route("/forum", methods=["GET", "POST"])
+@app.route("/forum", methods=["GET", "POST"]) #XSS
 def forum():
     if "user_id" not in session:
         return redirect("/login")
@@ -72,7 +72,7 @@ def forum():
     c = conn.cursor()
     if request.method == "POST":
         title = request.form["title"]
-        content = request.form["content"]  # ⚠️ BEWUSSTE LÜCKE: Stored XSS
+        content = request.form["content"]  # ⚠️ BEWUSSTE LÜCKE: Stored XSS , ,wird das bei jedem ausgefuehrt der das Forum oeffnet.
         c.execute("INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)",
                   (session["user_id"], title, content))
         conn.commit()
@@ -81,7 +81,7 @@ def forum():
     return render_template("forum.html", posts=posts, username=session["username"])
 
 @app.route("/post/new", methods=["GET", "POST"])
-def new_post():
+def neue_post():
     if "user_id" not in session:
         return redirect("/login")
     if request.method == "POST":
@@ -95,6 +95,41 @@ def new_post():
         conn.close()
         return redirect("/forum")
     return render_template("new_post.html")
+
+@app.route("/post/<id>") #IDOR
+def zeig_post(id):
+    if "user_id" not in session:
+        return redirect("/login")
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM posts WHERE id = ?",(id,))
+    post = c.fetchone()
+    conn.close()
+
+    return f"Titel: {post[2]} - Inhalt: {post[3]}"
+
+
+@app.route("/files/") #Path Traversal
+def herunterladen():
+    filename = request.args.get("name")  # kommt aus URL Parameter
+    with open("uploads/" + filename, encoding="utf-8", errors="ignore") as f:  # ⚠️ BEWUSSTE LÜCKE: Path Traversal
+        inhalt = f.read()
+    return inhalt
+
+@app.route("/search")#Blind SQL Injection
+def search():
+    username = request.args.get("username")
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    query= f"SELECT * FROM users WHERE username='{username}'"
+    user = c.execute(query).fetchone()
+    if  user:
+        return "User gefunden"
+    else:
+        return "User nicht gefunden"
+    
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

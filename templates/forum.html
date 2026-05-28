@@ -28,19 +28,13 @@
         </section>
 
         <section class="card wide">
-            <h2>Beispieleinträge</h2>
-
+            <h2>Beiträge</h2>
+            {% for post in posts %}
             <article class="post">
-                <h3>Willkommen im Forum</h3>
-                <p>Dies ist ein Beispielbeitrag.</p>
-                <a href="/profile/1">Autor ansehen</a>
+                <h3>{{ post[2] }}</h3>
+                <p>{{ post[3] | safe }}</p>
             </article>
-
-            <article class="post">
-                <h3>IT-Sicherheit Projekt</h3>
-                <p>Hier werden später absichtlich unsichere Inhalte angezeigt.</p>
-                <a href="/profile/2">Autor ansehen</a>
-            </article>
+            {% endfor %}
         </section>
     </main>
 </body>
