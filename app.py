@@ -97,7 +97,7 @@ def neue_post():
     return render_template("new_post.html")
 
 @app.route("/usercheck") #Blind SQL Injection
-def search():
+def usercheck():
     username = request.args.get("username")
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
