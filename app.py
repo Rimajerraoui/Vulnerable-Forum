@@ -96,6 +96,25 @@ def neue_post():
         return redirect("/forum")
     return render_template("new_post.html")
 
+@app.route("/usercheck") #Blind SQL Injection
+def search():
+    username = request.args.get("username")
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    query= f"SELECT * FROM users WHERE username='{username}'"
+    user = c.execute(query).fetchone()
+    if  user:
+        return "User gefunden"
+    else:
+        return "User nicht gefunden"
+
+@app.route("/search")
+def search():
+    query = request.args.get("q", "")
+
+    # Reflected XSS ist in search.html durch {{ query|safe }}
+    return render_template("search.html", query=query)
+
 @app.route("/post/<id>") #IDOR
 def zeig_post(id):
     if "user_id" not in session:
@@ -116,25 +135,8 @@ def herunterladen():
         inhalt = f.read()
     return inhalt
 
-@app.route("/usercheck") #Blind SQL Injection
-def search():
-    username = request.args.get("username")
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    query= f"SELECT * FROM users WHERE username='{username}'"
-    user = c.execute(query).fetchone()
-    if  user:
-        return "User gefunden"
-    else:
-        return "User nicht gefunden"
-    
-@app.route("/search")
-def search():
-    query = request.args.get("q", "")
 
-    # Reflected XSS ist in search.html durch {{ query|safe }}
-    return render_template("search.html", query=query)
-    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
