@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>VulnForum</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav>
+        <h2>VulnForum</h2>
+
+        <a href="/">Home</a>
+        <a href="/forum">Forum</a>
+        <a href="/search">Suche</a>
+        <a href="/login">Login</a>
+        <a href="/register">Registrieren</a>
+    </nav>
+
+    <main class="container">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</body>
+</html>
+

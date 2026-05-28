@@ -1,33 +1,60 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <title>Registrieren - VulnForum</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+
     <nav>
         <h2>VulnForum</h2>
+
         <a href="/">Home</a>
+        <a href="/forum">Forum</a>
+        <a href="/search">Suche</a>
         <a href="/login">Login</a>
         <a href="/register">Registrieren</a>
     </nav>
 
-    <main class="card">
-        <h1>Registrieren</h1>
-        <form method="POST">
-            <input type="text" name="username" placeholder="Benutzername" required>
-            <input type="password" name="password" placeholder="Passwort" required>
-            <button type="submit">Account erstellen</button>
-        </form>
+    <main class="container">
+
+        <section class="card">
+
+            <h1>Registrieren</h1>
+
+            <p>Erstelle ein neues Konto im VulnForum.</p>
+
+            <form method="POST">
+
+                <input type="text"
+                       name="username"
+                       placeholder="Benutzername"
+                       required>
+
+                <input type="password"
+                       name="password"
+                       placeholder="Passwort"
+                       required>
+
+                <button type="submit">
+                    Account erstellen
+                </button>
+
+            </form>
+
+            <p style="margin-top: 15px;">
+                Schon ein Konto?
+                <a href="/login">Jetzt einloggen</a>
+            </p>
+
+        </section>
+
     </main>
+
 </body>
 </html>
-=======
-<form method="POST">
-    <input name="username" placeholder="Username">
-    <input name="password" placeholder="Password">
-    <button type="submit">Registrieren</button>
-</form>
->>>>>>> a24bcdf8261d4808174845a781b00413eaaf78c8

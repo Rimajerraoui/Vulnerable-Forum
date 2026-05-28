@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Neuer Beitrag - VulnForum</title>
+    <title>Suche - VulnForum</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
@@ -17,37 +17,48 @@
 
         <a href="/">Home</a>
         <a href="/forum">Forum</a>
-        <a href="/search">Suche</a>
         <a href="/login">Login</a>
         <a href="/register">Registrieren</a>
+        <a href="/search">Suche</a>
     </nav>
 
     <main class="container">
 
         <section class="card wide">
 
-            <h1>Neuen Beitrag erstellen</h1>
+            <h1>Suche</h1>
 
             <p>
-                Veröffentliche einen neuen Beitrag im Forum.
+                Suche nach Beiträgen im VulnForum.
             </p>
 
-            <form method="POST">
+            <form method="GET">
 
                 <input type="text"
-                       name="title"
-                       placeholder="Titel des Beitrags"
-                       required>
-
-                <textarea name="content"
-                          placeholder="Schreibe deinen Beitrag..."
-                          required></textarea>
+                       name="q"
+                       placeholder="Suchbegriff eingeben">
 
                 <button type="submit">
-                    Beitrag veröffentlichen
+                    Suchen
                 </button>
 
             </form>
+
+            {% if query %}
+
+                <div class="post">
+
+                    <h2>Suchergebnis für:</h2>
+
+                    <!-- ABSICHTLICH UNSICHER: Reflected XSS -->
+
+                    <p class="result">
+                        {{ query|safe }}
+                    </p>
+
+                </div>
+
+            {% endif %}
 
         </section>
 
@@ -55,3 +66,4 @@
 
 </body>
 </html>
+
