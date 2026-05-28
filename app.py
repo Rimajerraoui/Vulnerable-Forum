@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "1234"  # ⚠️ BEWUSSTE LÜCKE: schwacher Secret Key , Angreifer kann es leicht faelschen
+app.secret_key = "1234"  #  BEWUSSTE LÜCKE: schwacher Secret Key , Angreifer kann es leicht faelschen
 
 def init_db():
     conn = sqlite3.connect("database.db")
@@ -37,7 +37,7 @@ def home():
 def register():
     if request.method == "POST":
         username = request.form["username"]
-        password = request.form["password"]  # ⚠️ BEWUSSTE LÜCKE: Passwoerter sind in DB lesbar (broken audentication)
+        password = request.form["password"]  #  BEWUSSTE LÜCKE: Passwoerter sind in DB lesbar (broken audentication)
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
         c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
@@ -53,7 +53,7 @@ def login():
         password = request.form["password"]
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
-        # ⚠️ BEWUSSTE LÜCKE: SQL Injection , login ohne passwort moeglich , wenn der Angreifer 
+        # BEWUSSTE LÜCKE: SQL Injection , login ohne passwort moeglich
         query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
         user = c.execute(query).fetchone()
         conn.close()
@@ -72,7 +72,7 @@ def forum():
     c = conn.cursor()
     if request.method == "POST":
         title = request.form["title"]
-        content = request.form["content"]  # ⚠️ BEWUSSTE LÜCKE: Stored XSS , ,wird das bei jedem ausgefuehrt der das Forum oeffnet.
+        content = request.form["content"]  # BEWUSSTE LÜCKE: Stored XSS , ,wird das bei jedem ausgefuehrt der das Forum oeffnet.
         c.execute("INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)",
                   (session["user_id"], title, content))
         conn.commit()
@@ -112,11 +112,11 @@ def zeig_post(id):
 @app.route("/files/") #Path Traversal
 def herunterladen():
     filename = request.args.get("name")  # kommt aus URL Parameter
-    with open("uploads/" + filename, encoding="utf-8", errors="ignore") as f:  # ⚠️ BEWUSSTE LÜCKE: Path Traversal
+    with open("uploads/" + filename, encoding="utf-8", errors="ignore") as f:  #BEWUSSTE LÜCKE: Path Traversal
         inhalt = f.read()
     return inhalt
 
-@app.route("/search")#Blind SQL Injection
+@app.route("/usercheck") #Blind SQL Injection
 def search():
     username = request.args.get("username")
     conn = sqlite3.connect("database.db")
@@ -127,6 +127,13 @@ def search():
         return "User gefunden"
     else:
         return "User nicht gefunden"
+    
+@app.route("/search")
+def search():
+    query = request.args.get("q", "")
+
+    # Reflected XSS ist in search.html durch {{ query|safe }}
+    return render_template("search.html", query=query)
     
 
 if __name__ == "__main__":
