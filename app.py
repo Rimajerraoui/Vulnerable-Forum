@@ -61,7 +61,7 @@ def login():
             session["user_id"] = user[0]
             session["username"] = user[1]
             return redirect("/forum")
-        return render_template("login.html", error="Falscher Benutzername oder Passwort!")
+        return render_template("login.html", error="Ihre Anmeldung war leider nicht erfolgreich. Bitte versuchen Sie es noch einmal und prüfen Sie die Benutzername und das Passwort!")
     return render_template("login.html")
 
 @app.route("/forum", methods=["GET", "POST"]) #XSS

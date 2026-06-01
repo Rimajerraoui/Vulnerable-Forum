@@ -34,10 +34,11 @@
                 z-index: 9999;
                 box-shadow: 0 0 30px rgba(255,0,0,0.3);
             ">
-                <p style="color: #ff7b72; font-size: 18px;">❌ {{ error }}</p>
+                <h2 style="color: #ff7b72; margin-top: 0;">⚠️ Fehler!</h2>
+                <p style="color: #ff7b72; font-size: 18px;">{{ error }}</p>
                 <button onclick="document.getElementById('popup').style.display='none'" 
                         style="width: auto; padding: 10px 20px; margin-top: 10px;">
-                    OK
+                    Schließen
                 </button>
             </div>
             {% endif %}
