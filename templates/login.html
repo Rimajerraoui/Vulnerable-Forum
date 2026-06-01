@@ -20,9 +20,27 @@
     <section class="card">
         <h1>Login</h1>
         <p>Melde dich im VulnForum an.</p>
-        {% if error %}
-        <p style="color: red;">{{ error }}</p>
-        {% endif %}
+                {% if error %}
+            <div id="popup" style="
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #161b22;
+                border: 1px solid #ff7b72;
+                border-radius: 12px;
+                padding: 30px;
+                text-align: center;
+                z-index: 9999;
+                box-shadow: 0 0 30px rgba(255,0,0,0.3);
+            ">
+                <p style="color: #ff7b72; font-size: 18px;">❌ {{ error }}</p>
+                <button onclick="document.getElementById('popup').style.display='none'" 
+                        style="width: auto; padding: 10px 20px; margin-top: 10px;">
+                    OK
+                </button>
+            </div>
+            {% endif %}
         <form method="POST">
             <input type="text" name="username" placeholder="Benutzername" required>
             <input type="password" name="password" placeholder="Passwort" required>
