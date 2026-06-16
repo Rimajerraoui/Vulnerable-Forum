@@ -1,7 +1,0 @@
-# Reflected-XSS
-
-**Beschreibung:**  
-Die Suchfunktion ist anfällig für Reflected Cross-Site Scripting (XSS). Benutzereingaben werden ungefiltert im Browser angezeigt, wodurch eingeschleuster JavaScript-Code ausgeführt werden kann.
-
-## Screenshot
-![Reflected-XSS](Reflected-XSS1.jpg)
