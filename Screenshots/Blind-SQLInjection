@@ -1,0 +1,7 @@
+# Blind-SQLInjection
+
+**Beschreibung:**  
+Die Benutzerüberprüfung ist anfällig für Blind SQL-Injection. Durch manipulierte Eingaben können Informationen über die Datenbank abgefragt werden, obwohl keine direkten SQL-Fehlermeldungen ausgegeben werden.
+
+## Screenshot
+![Blind-SQLInjection](Blind-SQLInjection.jpg)

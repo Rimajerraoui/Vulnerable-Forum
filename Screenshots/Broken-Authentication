@@ -1,0 +1,7 @@
+# Broken-Authentication
+
+**Beschreibung:**  
+Die Login-Funktion ist anfällig für Broken Authentication. Durch die Verwendung schwacher Zugangsdaten oder unzureichender Authentifizierungsmechanismen kann sich ein Angreifer unbefugt Zugriff auf das System verschaffen.
+
+## Screenshot
+![Broken-Authentication](Broken-Authentication.jpg)

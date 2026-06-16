@@ -1,0 +1,7 @@
+# Path-Traversal
+
+**Beschreibung:**  
+Die Download-Funktion ist anfällig für Path Traversal. Durch manipulierte Dateipfade kann auf Dateien außerhalb des vorgesehenen Verzeichnisses zugegriffen werden.
+
+## Screenshot
+![Path-Traversal](Path-Traversal.jpg)
