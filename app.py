@@ -128,7 +128,7 @@ def zeig_post(id):
     return f"Titel: {post[2]} - Inhalt: {post[3]}"
 
 
-@app.route("/files/") #Path Traversal
+@app.route("/files") #Path Traversal
 def herunterladen():
     filename = request.args.get("name")  # kommt aus URL Parameter
     with open("uploads/" + filename, encoding="utf-8", errors="ignore") as f:  #BEWUSSTE LÜCKE: Path Traversal
